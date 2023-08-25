@@ -46,3 +46,20 @@ def findPath(width, height, forbidden_circles_list):
 # Example usage
 print(findPath(3, 3, [(1, 2, 1), (2, 2, 0.5)]))  # Output should be a valid path
 print(findPath(3, 3, [(1, 2, 1), (2, 2, 1)]))  # Output should be []
+#######################################
+
+TypeError                                 Traceback (most recent call last)
+<ipython-input-5-ecc6fd53e54b> in <module>
+     45 
+     46 # Example usage
+---> 47 print(findPath(3, 3, [(1, 2, 1), (2, 2, 0.5)]))  # Output should be a valid path
+     48 print(findPath(3, 3, [(1, 2, 1), (2, 2, 1)]))  # Output should be []
+
+<ipython-input-5-ecc6fd53e54b> in findPath(width, height, forbidden_circles_list)
+     31                 if next_point == (None, None):
+     32                     break
+---> 33                 x, y = next_point
+     34             return path
+     35 
+
+TypeError: cannot unpack non-iterable NoneType object
