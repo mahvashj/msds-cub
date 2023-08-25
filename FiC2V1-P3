@@ -1,0 +1,48 @@
+from collections import deque
+from math import sqrt
+
+# Function to test if a point lies inside any of the given circles
+def ptInCircle(x, y, circles_list):
+    for (xc, yc, rc) in circles_list:
+        d = sqrt((x - xc)**2 + (y - yc)**2)
+        if d <= rc:
+            return True
+    return False
+
+# Function to find a path from (0,0) to (width, height) avoiding circles
+def findPath(width, height, forbidden_circles_list):
+    assert width >= 1
+    assert height >= 1
+    assert all(x <= width and x >=0 and y <= height and y >= 0 and r > 0 for (x, y, r) in forbidden_circles_list)
+    
+    queue = deque([(0, 0)])
+    parent = {(0, 0): None}
+    
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    
+    while queue:
+        x, y = queue.popleft()
+        
+        if (x, y) == (width, height):
+            path = []
+            while (x, y):
+                path.insert(0, (x, y))
+                next_point = parent.get((x, y), (None, None))
+                if next_point == (None, None):
+                    break
+                x, y = next_point
+            return path
+
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            
+            if 0 <= nx <= width and 0 <= ny <= height:
+                if (nx, ny) not in parent and not ptInCircle(nx, ny, forbidden_circles_list):
+                    queue.append((nx, ny))
+                    parent[(nx, ny)] = (x, y)
+                    
+    return []
+
+# Example usage
+print(findPath(3, 3, [(1, 2, 1), (2, 2, 0.5)]))  # Output should be a valid path
+print(findPath(3, 3, [(1, 2, 1), (2, 2, 1)]))  # Output should be []
